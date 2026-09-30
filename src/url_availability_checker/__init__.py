@@ -130,7 +130,7 @@ def get_origin_location() -> str | None:
         return None
 
 
-def run(input_file: Path, output: Path, concurrency: int, timeout: float, settle: float, browser_path: str | None, show_browser: bool = False) -> int:
+def run(input_file: Path, output: Path, concurrency: int, timeout: float, settle: float, browser_path: str | None, show_browser: bool = True) -> int:
     """Executa as verificações em abas paralelas e grava o relatório."""
     urls = read_urls(input_file)
     generated_at = datetime.now().astimezone()
@@ -177,12 +177,12 @@ def main() -> None:
     parser.add_argument("--timeout", type=float, default=30, help="tempo limite de carregamento, em segundos (padrão: 30)")
     parser.add_argument("--settle", type=float, default=1, help="espera após o carregamento, em segundos (padrão: 1)")
     parser.add_argument("--browser", help="caminho opcional do executável Chrome/Chromium")
-    parser.add_argument("--show-browser", action="store_true", help="exibe a janela do navegador (padrão: headless)")
+    parser.add_argument("--headless", action="store_true", help="executa sem exibir a janela do navegador")
     args = parser.parse_args()
     if args.concurrency < 1 or args.timeout <= 0 or args.settle < 0:
         parser.error("a concorrência e o tempo limite devem ser positivos; a espera não pode ser negativa")
     try:
-        sys.exit(run(args.input, args.output, args.concurrency, args.timeout, args.settle, args.browser, args.show_browser))
+        sys.exit(run(args.input, args.output, args.concurrency, args.timeout, args.settle, args.browser, not args.headless))
     except (OSError, ValueError) as exc:
         parser.error(str(exc))
 

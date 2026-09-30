@@ -11,7 +11,7 @@ uv sync
 uv run url-availability-checker
 ```
 
-Adicione um URL HTTP(S) por linha em `urls.txt`. Linhas vazias e comentários iniciados por `#` são ignorados. O navegador é iniciado em modo headless por padrão; use `--show-browser` para exibir a janela durante a verificação.
+Adicione um URL HTTP(S) por linha em `urls.txt`. Linhas vazias e comentários iniciados por `#` são ignorados. O navegador é exibido por padrão; use `--headless` para executá-lo sem janela.
 
 ```console
 uv run url-availability-checker [urls.txt] --output report --concurrency 4 --timeout 30 --settle 1 --browser "C:\\caminho\\chrome.exe"
@@ -24,7 +24,7 @@ Opções:
 - `--timeout`: tempo limite de carregamento por página, em segundos (padrão: `30`)
 - `--settle`: espera após o carregamento, em segundos (padrão: `1`)
 - `--browser`: caminho do executável Chrome/Chromium, caso a detecção automática não funcione
-- `--show-browser`: exibe a janela do navegador em vez de usar o modo headless
+- `--headless`: executa sem exibir a janela do navegador
 
 O nome do relatório é derivado do nome do arquivo de entrada, aparece no título HTML e prefixa os snapshots. O programa cria `report/index.html` com data e hora da execução e `report/snapshots/`, cujos arquivos recebem o nome e o carimbo de data e hora no nome. Retorna código de saída `1` se alguma URL falhar ou se a resposta final não for 2xx; retorna `0` se todas forem aprovadas. O código HTTP vem da API Navigation Timing do Chrome; se não estiver disponível, a verificação considera o resultado do carregamento no navegador. A localização aproximada da conexão é consultada uma vez por execução em `ipapi.co`, usando o IP público de saída. Isso compartilha esse IP com o serviço; se a consulta falhar, o relatório indica localização indisponível.
 
