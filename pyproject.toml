@@ -1,0 +1,24 @@
+[project]
+name = "url-availability-checker"
+version = "0.1.0"
+description = "Verifica a disponibilidade de URLs com Chromium e gera um relatório HTML"
+readme = "README.md"
+authors = [
+    { name = "Ronaldo da Silva Alves Batista", email = "rsilva@anatel.gov.br" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "drissionpage>=4.1.1.4",
+]
+
+[project.scripts]
+url-availability-checker = "url_availability_checker:main"
+
+[build-system]
+requires = ["uv_build>=0.11.26,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pyinstaller>=6.22.3",
+]
